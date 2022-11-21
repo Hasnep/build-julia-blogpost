@@ -39,7 +39,7 @@ function copy_metadata_file_to_build_folder(metadata_file_path, build_folder)
 end
 
 function build_to_html(from_md_file_path, to_html_file_path)
-    @info "Building markdown file `$from_md_file_path` to HTML file at `$built_html_file_path`."
+    @info "Building markdown file `$from_md_file_path` to HTML file at `$to_html_file_path`."
     run(
         Cmd([
             "pandoc",
