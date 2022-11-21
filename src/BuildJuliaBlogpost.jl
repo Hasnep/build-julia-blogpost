@@ -43,7 +43,7 @@ function build_to_html(from_md_file_path, to_html_file_path)
     run(
         Cmd([
             "pandoc",
-            built_md_file_path,
+            from_md_file_path,
             "--from=markdown",
             "--to=html",
             "--standalone",
