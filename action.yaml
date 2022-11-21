@@ -1,0 +1,9 @@
+name: Build Julia Blogpost
+description: Build a Julia blogpost using Literate.jl
+runs:
+  using: composite
+  steps:
+    - id: build
+      name: Build blogpost
+      shell: bash
+      run: ${{ github.action_path }}/build.jl
