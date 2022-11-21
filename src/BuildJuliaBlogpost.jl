@@ -21,7 +21,7 @@ function get_blogpost_id(metadata_file_path)
     return metadata["id"]
 end
 
-function build_blogpost(blogpost_file_path)
+function build_blogpost(blogpost_file_path, build_folder)
     @info "Building `$blogpost_file_path`."
     return Literate.markdown(
         blogpost_file_path,
@@ -65,7 +65,7 @@ function main(; run_pandoc, create_tarball)
     metadata_file_path = get_metadata_file_path()
     blogpost_id = get_blogpost_id(metadata_file_path)
 
-    blogpost_file_path = get_blogpost_file_path(blogpost_id)
+    blogpost_file_path = get_blogpost_file_path(blogpost_id, build_folder)
     built_md_file_path = build_blogpost(blogpost_file_path)
     copy_metadata_file_to_build_folder(metadata_file_path, build_folder)
 
