@@ -14,11 +14,10 @@ mkpath(build_folder)
 metadata_file_path = joinpath(pwd(), "metadata.toml")
 @info "Reading metadata file `$metadata_file_path`."
 metadata = TOML.parsefile(metadata_file_path)
-slug = metadata["slug"]
-title = metadata["title"]
+id = metadata["id"]
 
 # Build markdown document
-input_jl_file_path = joinpath(pwd(), "src", slug * ".jl")
+input_jl_file_path = joinpath(pwd(), "src", id * ".jl")
 @info "Building `$input_jl_file_path`."
 Literate.markdown(
     input_jl_file_path,
@@ -26,9 +25,7 @@ Literate.markdown(
     documenter=false,
     execute=true,
     # Fix auto-formatted hide comments
-    preprocess=s -> replace(s, "# hide\n" => "#hide\n"),
-    # Insert title
-    postprocess=s -> "---\ntitle: $title\n---\n\n$s"
+    preprocess=s -> replace(s, "# hide\n" => "#hide\n")
 )
 
 # Copy metadata file to build build folder
@@ -36,6 +33,6 @@ Literate.markdown(
 cp(metadata_file_path, joinpath(build_folder, "metadata.toml"); force=true)
 
 # Create tarball
-tarball_file_path = joinpath(pwd(), slug * ".tar")
+tarball_file_path = joinpath(pwd(), id * ".tar")
 @info "Creating tarball file at `$tarball_file_path`."
 Tar.create(build_folder, tarball_file_path)
