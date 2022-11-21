@@ -6,4 +6,4 @@ runs:
     - id: build
       name: Build blogpost
       shell: bash
-      run: ${{ github.action_path }}/build.jl
+      run: julia --project=. -e 'using BuildJuliaBlogpost'
