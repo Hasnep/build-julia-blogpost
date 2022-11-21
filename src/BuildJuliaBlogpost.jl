@@ -24,7 +24,7 @@ end
 function build_blogpost(blogpost_file_path)
     @info "Building `$blogpost_file_path`."
     return Literate.markdown(
-        input_jl_file_path,
+        blogpost_file_path,
         build_folder;
         documenter=false,
         execute=true,
