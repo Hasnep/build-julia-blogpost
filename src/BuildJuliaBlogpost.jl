@@ -65,8 +65,8 @@ function main(; run_pandoc, create_tarball)
     metadata_file_path = get_metadata_file_path()
     blogpost_id = get_blogpost_id(metadata_file_path)
 
-    blogpost_file_path = get_blogpost_file_path(blogpost_id, build_folder)
-    built_md_file_path = build_blogpost(blogpost_file_path)
+    blogpost_file_path = get_blogpost_file_path(blogpost_id)
+    built_md_file_path = build_blogpost(blogpost_file_path, build_folder)
     copy_metadata_file_to_build_folder(metadata_file_path, build_folder)
 
     if run_pandoc
