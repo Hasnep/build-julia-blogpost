@@ -80,8 +80,4 @@ function main(; run_pandoc, create_tarball)
     end
 end
 
-if !isinteractive()
-    main(run_pandoc=false, create_tarball=true)
-end
-
 end # module
