@@ -6,4 +6,4 @@ runs:
     - id: build
       name: Build blogpost
       shell: bash
-      run: julia --project=. -e 'import BuildJuliaBlogpost; BuildJuliaBlogpost.main(run_pandoc=false, create_tarball=true)'
+      run: julia --project=. -e 'import BuildJuliaBlogpost; BuildJuliaBlogpost.build(run_pandoc=false, create_tarball=true)'
