@@ -1,0 +1,19 @@
+style = "blue"
+# Overrides
+always_for_in = true
+always_use_return = true
+annotate_untyped_fields_with_any = true
+for_in_replacement = "in"
+import_to_using = false
+indent = 4
+long_to_short_function_def = true
+margin = 92
+normalize_line_endings = "unix"
+pipe_to_function_call = false
+remove_extra_newlines = true
+separate_kwargs_with_semicolon = true
+short_to_long_function_def = false
+trailing_comma = true
+whitespace_in_kwargs = false
+whitespace_ops_in_indices = true
+whitespace_typedefs = true
