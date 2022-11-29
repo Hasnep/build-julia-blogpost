@@ -28,8 +28,8 @@ function build_blogpost_to_markdown(blogpost_file_path, build_folder)
     return Literate.markdown(
         blogpost_file_path,
         build_folder;
-        documenter=false,
         execute=true,
+        flavor=Literate.CommonMarkFlavor(),
         # Fix auto-formatted hide comments
         preprocess=s -> replace(s, "# hide\n" => "#hide\n")
     )
@@ -46,7 +46,7 @@ function build_markdown_to_html(from_md_file_path, to_html_file_path)
         Cmd([
             "pandoc",
             from_md_file_path,
-            "--from=markdown",
+            "--from=commonmark",
             "--to=html",
             "--standalone",
             "--output=" * to_html_file_path,
