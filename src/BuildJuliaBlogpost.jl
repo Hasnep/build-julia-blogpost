@@ -13,8 +13,8 @@ get_tarball_file_path(blogpost_id) = joinpath(pwd(), "$blogpost_id.tar")
 
 function delete_and_recreate_build_folder(build_folder)
     @info "Creating empty build folder `$build_folder`."
-    rm(build_folder, force=true, recursive=true)
-    mkpath(build_folder)
+    rm(build_folder; force=true, recursive=true)
+    return mkpath(build_folder)
 end
 
 function get_blogpost_id(metadata_file_path)
@@ -55,7 +55,7 @@ end
 
 function create_tarball_file(build_folder, tarball_file_path)
     @info "Creating tarball file at `$tarball_file_path`."
-    Tar.create(build_folder, tarball_file_path)
+    return Tar.create(build_folder, tarball_file_path)
 end
 
 function build(; run_pandoc, create_tarball)
