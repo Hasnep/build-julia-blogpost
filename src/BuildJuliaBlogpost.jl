@@ -42,16 +42,15 @@ end
 
 function build_markdown_to_html(from_md_file_path, to_html_file_path)
     @info "Building markdown file `$from_md_file_path` to HTML file at `$to_html_file_path`."
-    run(
-        Cmd([
-            "pandoc",
-            from_md_file_path,
-            "--from=commonmark",
-            "--to=html",
-            "--standalone",
-            "--output=" * to_html_file_path,
-        ]),
-    )
+    pandoc_command = Cmd([
+        "pandoc",
+        from_md_file_path,
+        "--from=commonmark",
+        "--to=html",
+        "--standalone",
+        "--output=" * to_html_file_path,
+    ])
+    run(pandoc_command)
     return nothing
 end
 
