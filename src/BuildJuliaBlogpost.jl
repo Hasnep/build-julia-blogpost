@@ -29,8 +29,13 @@ function build_blogpost_to_markdown(blogpost_file_path, build_folder)
         blogpost_file_path,
         build_folder;
         execute=true,
-        # Fix auto-formatted hide comments
-        preprocess=s -> replace(s, "# hide\n" => "#hide\n"),
+        preprocess=s -> replace(
+            s,
+            # Fix auto-formatted hide comments
+            "# hide\n" => "#hide\n",
+            # Set interactivity flag
+            "IS_INTERACTIVE = true" => "IS_INTERACTIVE = false",
+        ),
     )
 end
 
