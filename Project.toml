@@ -1,6 +1,6 @@
 name = "BuildJuliaBlogpost"
 uuid = "e4923c24-d259-4c4a-ba90-f2b05615c70e"
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 FileWatching = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
