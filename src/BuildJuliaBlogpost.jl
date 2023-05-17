@@ -5,6 +5,8 @@ import Literate
 import Tar
 import TOML
 
+export build, watch
+
 get_build_folder() = joinpath(pwd(), "build")
 get_metadata_file_path() = joinpath(pwd(), "metadata.toml")
 get_src_folder() = joinpath(pwd(), "src")
