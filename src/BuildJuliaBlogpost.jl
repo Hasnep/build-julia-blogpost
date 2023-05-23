@@ -7,11 +7,13 @@ import TOML
 
 export build, watch
 
-get_build_folder() = joinpath(pwd(), "build")
-get_metadata_file_path() = joinpath(pwd(), "metadata.toml")
-get_src_folder() = joinpath(pwd(), "src")
-get_blogpost_file_path(blogpost_id) = joinpath(get_src_folder(), "$blogpost_id.jl")
-get_tarball_file_path(blogpost_id) = joinpath(pwd(), "$blogpost_id.tar")
+get_default_root_folder() = pwd()
+get_build_folder(root_folder) = joinpath(root_folder, "build")
+get_metadata_file_path(root_folder) = joinpath(root_folder, "metadata.toml")
+get_src_folder(root_folder) = joinpath(root_folder, "src")
+get_blogpost_file_path(root_folder, blogpost_id) =
+    joinpath(get_src_folder(root_folder), "$blogpost_id.jl")
+get_tarball_file_path(root_folder, blogpost_id) = joinpath(root_folder, "$blogpost_id.tar")
 
 function delete_and_recreate_build_folder(build_folder)
     @info "Creating empty build folder `$build_folder`."
@@ -30,6 +32,7 @@ function build_blogpost_to_markdown(blogpost_file_path, build_folder)
     return Literate.markdown(
         blogpost_file_path,
         build_folder;
+        flavor=Literate.CommonMarkFlavor(),
         execute=true,
         preprocess=s -> replace(
             s,
@@ -38,6 +41,7 @@ function build_blogpost_to_markdown(blogpost_file_path, build_folder)
             # Set interactivity flag
             "IS_INTERACTIVE = true" => "IS_INTERACTIVE = false",
         ),
+        credit=false, # Sorry!
     )
 end
 
@@ -65,14 +69,14 @@ function create_tarball_file(build_folder, tarball_file_path)
     return Tar.create(build_folder, tarball_file_path)
 end
 
-function build(; run_pandoc, create_tarball)
-    build_folder = get_build_folder()
+function build(root_folder=get_default_root_folder(); run_pandoc, create_tarball)
+    build_folder = get_build_folder(root_folder)
     delete_and_recreate_build_folder(build_folder)
 
-    metadata_file_path = get_metadata_file_path()
+    metadata_file_path = get_metadata_file_path(root_folder)
     blogpost_id = get_blogpost_id(metadata_file_path)
 
-    blogpost_file_path = get_blogpost_file_path(blogpost_id)
+    blogpost_file_path = get_blogpost_file_path(root_folder, blogpost_id)
     built_md_file_path = build_blogpost_to_markdown(blogpost_file_path, build_folder)
     copy_metadata_file_to_build_folder(metadata_file_path, build_folder)
 
@@ -82,20 +86,21 @@ function build(; run_pandoc, create_tarball)
     end
 
     if create_tarball
-        tarball_file_path = get_tarball_file_path(blogpost_id)
+        tarball_file_path = get_tarball_file_path(root_folder, blogpost_id)
         create_tarball_file(build_folder, tarball_file_path)
     end
 end
 
-function watch(; run_pandoc, create_tarball)
-    src_folder = get_src_folder()
+function watch(root_folder=get_default_root_folder(); run_pandoc, create_tarball)
+    build_folder = get_build_folder(root_folder)
+    src_folder = get_src_folder(root_folder)
     while true
         @info "Watching `$src_folder`."
         file_path, output = FileWatching.watch_folder(src_folder)
         if output.changed
             @info "Updated `$file_path`, rebuilding."
             try
-                build(; run_pandoc, create_tarball)
+                build(build_folder; run_pandoc, create_tarball)
             catch err
                 @error err
             end
