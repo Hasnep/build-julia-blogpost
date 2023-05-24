@@ -100,7 +100,7 @@ function watch(root_folder=get_default_root_folder(); run_pandoc, create_tarball
         if output.changed
             @info "Updated `$file_path`, rebuilding."
             try
-                build(build_folder; run_pandoc, create_tarball)
+                build(root_folder; run_pandoc, create_tarball)
             catch err
                 @error err
             end
