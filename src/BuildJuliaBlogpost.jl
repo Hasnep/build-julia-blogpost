@@ -13,7 +13,7 @@ get_metadata_file_path(root_folder) = joinpath(root_folder, "metadata.toml")
 get_src_folder(root_folder) = joinpath(root_folder, "src")
 get_blogpost_file_path(root_folder, blogpost_id) =
     joinpath(get_src_folder(root_folder), "$blogpost_id.jl")
-get_tarball_file_path(root_folder, blogpost_id) = joinpath(root_folder, "$blogpost_id.tar")
+get_tarball_file_path(root_folder) = joinpath(root_folder, "blogpost.tar")
 
 function delete_and_recreate_build_folder(build_folder)
     @info "Creating empty build folder `$build_folder`."
@@ -86,7 +86,7 @@ function build(root_folder=get_default_root_folder(); run_pandoc, create_tarball
     end
 
     if create_tarball
-        tarball_file_path = get_tarball_file_path(root_folder, blogpost_id)
+        tarball_file_path = get_tarball_file_path(root_folder)
         create_tarball_file(build_folder, tarball_file_path)
     end
 end
