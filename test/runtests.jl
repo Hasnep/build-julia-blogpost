@@ -38,6 +38,6 @@ import BuildJuliaBlogpost
     @test strip(output_md) == strip(expected_output)
 
     # Test that the tar file was created
-    output_tar_file_path = joinpath(pwd(), "blogpost.tar")
+    output_tar_file_path = joinpath(workspace_folder, "blogpost.tar")
     @test isfile(output_tar_file_path)
 end
