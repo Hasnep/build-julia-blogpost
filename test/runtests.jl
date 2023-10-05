@@ -16,7 +16,7 @@ import BuildJuliaBlogpost
     write(joinpath(workspace_folder, "metadata.toml"), "id = \"test-blogpost\"")
 
     # Build the blogpost
-    BuildJuliaBlogpost.build(workspace_folder; run_pandoc=false, create_tarball=true)
+    BuildJuliaBlogpost.build(workspace_folder; standalone_html=false, create_tarball=true)
 
     # Check the output markdown file was built
     output_md_file_path = joinpath(workspace_folder, "build", "test-blogpost.md")
