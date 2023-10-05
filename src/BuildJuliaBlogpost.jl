@@ -92,7 +92,6 @@ function build(root_folder=get_default_root_folder(); run_pandoc, create_tarball
 end
 
 function watch(root_folder=get_default_root_folder(); run_pandoc, create_tarball)
-    build_folder = get_build_folder(root_folder)
     src_folder = get_src_folder(root_folder)
     while true
         @info "Watching `$src_folder`."
